@@ -12,6 +12,9 @@ Open Source, feeless GUI implementation for bridging ETH from the Ethereum Mainn
 
 ## Video Guide
 
+[![BaseBridge.app Tutorial](https://img.youtube.com/vi/8oSXvRnGUCQ/0.jpg)](https://www.youtube.com/watch?v=8oSXvRnGUCQ)
+
+
 
 
 
