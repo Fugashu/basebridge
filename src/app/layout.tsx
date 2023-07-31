@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'BaseBridge',
   description:
-    'BaseBridge app to migrate ETH from Ethereum Mainnet to Base Mainnet',
+    'Open Source, feeless BaseBridge GUI to migrate ETH from Ethereum Mainnet to Base Mainnet.',
 };
 
 export default function RootLayout({
