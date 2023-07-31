@@ -1,8 +1,9 @@
 'use client';
 
+import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { Web3Button } from '@web3modal/react';
-import { ethers, parseEther } from 'ethers';
+import { parseEther } from 'ethers';
 import {
   useAccount,
   usePrepareSendTransaction,
@@ -10,28 +11,30 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 import { useDebounce } from 'use-debounce';
-import { sendTransaction, switchNetwork } from '@wagmi/core';
-import { BASE_PROXY_CONTRACT_ADDRESS } from '@/constants/base-contract';
-import FooterComponent from '@/components/footer.component';
-import FaqComponent from '@/components/faq.component';
+import { switchNetwork } from '@wagmi/core';
+import { BASE_PROXY_CONTRACT_ADDRESS } from '@/constants/base';
 
 export default function HeroSectionComponent() {
+  const { isConnected } = useAccount();
   const [amount, setAmount] = useState('');
   const [debouncedTo] = useDebounce(BASE_PROXY_CONTRACT_ADDRESS, 500);
   const [debouncedAmount] = useDebounce(amount, 500);
-
   const { config } = usePrepareSendTransaction({
     to: debouncedTo,
     value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
   });
   const { data, sendTransaction } = useSendTransaction(config);
-
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   });
   const deposit = () => {
+    if (!isConnected) {
+      toast.error('Connect your wallet first.');
+      return;
+    }
     sendTransaction?.();
   };
+
   return (
     <div className="bg-gray-900">
       <div className="relative isolate pt-14">
@@ -53,8 +56,10 @@ export default function HeroSectionComponent() {
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                 BaseBridge
               </h1>{' '}
-              <Web3Button />
-              <p className="mt-6 text-lg leading-8 text-gray-300">
+              <div className={'m-12'}>
+                <Web3Button />
+              </div>
+              <p className="mt-6 text-lg leading-8 text-gray-300 text-justify m-12">
                 This app provides an easy to use GUI to bridge ETH from Ethereum
                 Mainnet to Base Mainnet. Connect your wallet to get started. To
                 add the Base Mainnet network to your wallet{' '}
@@ -79,27 +84,32 @@ export default function HeroSectionComponent() {
                   </div>
                   <input
                     type="number"
-                    name="price"
-                    id="price"
-                    onChange={(e) => setAmount(e.target.value)}
+                    name="ETH amount"
+                    id="ETH amount"
+                    onChange={(e) => {
+                      console.log(typeof e.target.value);
+                      if (e.target.value !== '') {
+                        try {
+                          parseEther(e.target.value);
+                        } catch (e) {
+                          return;
+                        }
+                      }
+                      setAmount(e.target.value);
+                    }}
                     className="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="0.00"
                     value={amount}
                     aria-label="Amount (ether)"
                   />
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                    <span
-                      className="text-gray-500 sm:text-sm"
-                      id="price-currency"
-                    >
-                      ETH
-                    </span>
+                    <span className="text-gray-500 sm:text-sm">ETH</span>
                   </div>
                 </div>
                 <div className="mt-6 text-2xl leading-8 text-gray-300">
                   Your will receive:
                   <div className={'flex justify-center gap-2 items-center'}>
-                    <p>{amount}</p>
+                    <p>{amount ? amount : 0}</p>
                     <img
                       className="h-5 justify-center "
                       aria-hidden="true"
@@ -111,8 +121,8 @@ export default function HeroSectionComponent() {
               </div>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <button
-                  onClick={deposit}
-                  className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+                  onClick={() => deposit()}
+                  className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
                 >
                   Deposit
                 </button>

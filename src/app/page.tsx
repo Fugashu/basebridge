@@ -6,17 +6,18 @@ import {
 } from '@web3modal/ethereum';
 import { Web3Modal } from '@web3modal/react';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { arbitrum, mainnet, polygon } from 'wagmi/chains';
+import { mainnet } from 'wagmi/chains';
 import HeroSectionComponent from '@/components/herosection.component';
 import FooterComponent from '@/components/footer.component';
-import { PROJECT_ID } from '@/constants/project_id';
-import { baseMainnet } from '@/constants/base-mainnet-network';
+import { ProjectId } from '@/constants/project';
+import { baseMainnet } from '@/constants/base';
 import FaqComponent from '@/components/faq.component';
 import DonationComponent from '@/components/donation.component';
+import { ToastContainer } from 'react-toastify';
 
 export default function Home() {
   const chains = [mainnet, baseMainnet];
-  const projectId = PROJECT_ID;
+  const projectId = ProjectId;
 
   const { publicClient } = configureChains(chains, [
     w3mProvider({ projectId }),
@@ -32,11 +33,24 @@ export default function Home() {
   return (
     <div>
       <WagmiConfig config={wagmiConfig}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         <HeroSectionComponent />
         <DonationComponent />
         <FaqComponent />
         <FooterComponent />
-        <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+        <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />{' '}
+        <ToastContainer />
       </WagmiConfig>
     </div>
   );

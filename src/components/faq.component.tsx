@@ -1,11 +1,27 @@
 import { Disclosure } from '@headlessui/react';
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline';
+import { BASE_PROXY_CONTRACT_ADDRESS } from '@/constants/base';
 
 const faqs = [
   {
-    question: "What's the best thing about Switzerland?",
-    answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    question: 'Is this secure?',
+    answer: `The whole code is open source and available at ${process.env.NEXT_PUBLIC_GITHUB_LINK}. This app uses the official Base Proxy Contract ${BASE_PROXY_CONTRACT_ADDRESS}.`,
+  },
+  {
+    question: 'Do you take a bridge fee?',
+    answer: `No. It's completely free.`,
+  },
+  {
+    question: 'How long does it take until the funds are bridged?',
+    answer: `On average about 15 minutes, but the time fluctuates based on network congestion.`,
+  },
+  {
+    question: 'Can I send any other assets than ETH?',
+    answer: `No. Only ETH is supported right now.`,
+  },
+  {
+    question: 'I want to report a bug. How can I do it?',
+    answer: `You can message me on Twitter or Github. Thanks for your feedback!`,
   },
 ];
 
