@@ -60,9 +60,10 @@ export default function HeroSectionComponent() {
                 <Web3Button />
               </div>
               <p className="mt-6 text-lg leading-8 text-gray-300 text-justify m-12">
-                This app provides an easy to use GUI to bridge ETH from Ethereum
-                Mainnet to Base Mainnet. Connect your wallet to get started. To
-                add the Base Mainnet network to your wallet{' '}
+                This app provides an easy to use, open source, feeless GUI to
+                bridge ETH from Ethereum Mainnet to Base Mainnet. Connect your
+                wallet to get started. To add the Base Mainnet network to your
+                wallet{' '}
                 <button
                   onClick={() => switchNetwork({ chainId: 8453 })}
                   className={'underline'}
@@ -107,7 +108,7 @@ export default function HeroSectionComponent() {
                   </div>
                 </div>
                 <div className="mt-6 text-2xl leading-8 text-gray-300">
-                  Your will receive:
+                  You will receive:
                   <div className={'flex justify-center gap-2 items-center'}>
                     <p>{amount ? amount : 0}</p>
                     <img
