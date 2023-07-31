@@ -59,7 +59,7 @@ export default function FaqComponent() {
                       </Disclosure.Button>
                     </dt>
                     <Disclosure.Panel as="dd" className="mt-2 pr-12">
-                      <p className="text-base leading-7 text-gray-300">
+                      <p className="text-sm leading-7 text-gray-300 ">
                         {faq.answer}
                       </p>
                     </Disclosure.Panel>
