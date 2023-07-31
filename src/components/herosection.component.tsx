@@ -12,7 +12,7 @@ import {
 } from 'wagmi';
 import { useDebounce } from 'use-debounce';
 import { switchNetwork } from '@wagmi/core';
-import { BASE_PROXY_CONTRACT_ADDRESS } from '@/constants/base';
+import { BASE_CHAIN_ID, BASE_PROXY_CONTRACT_ADDRESS } from '@/constants/base';
 
 export default function HeroSectionComponent() {
   const { isConnected } = useAccount();
@@ -65,7 +65,7 @@ export default function HeroSectionComponent() {
                 wallet to get started. To add the Base Mainnet network to your
                 wallet{' '}
                 <button
-                  onClick={() => switchNetwork({ chainId: 8453 })}
+                  onClick={() => switchNetwork({ chainId: BASE_CHAIN_ID })}
                   className={'underline'}
                 >
                   click here
